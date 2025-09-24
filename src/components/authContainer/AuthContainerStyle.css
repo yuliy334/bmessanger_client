@@ -1,0 +1,38 @@
+.authContainer {
+    /* justify-content: center; */
+    height: 70%;
+    width: 70%;
+    background-color: #DCCAE9;
+    border-radius: 20px;
+}
+
+.menu_bar {
+    height: 15%;
+    width: 100%;
+    background-color: #9356A0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+
+}
+
+.menu_bar div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #9356A0;
+    border: black 1px solid;
+}
+#left {
+    border-top-left-radius: 20px;
+}
+#right {
+    border-top-right-radius: 20px;
+}
