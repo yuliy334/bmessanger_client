@@ -1,25 +1,47 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import AuthContainer from './components/authContainer/AuthContainer';
+import { checkSessionRequest } from './utils/httpRequests';
+import { MessangerContainer } from './components/MessangerContainer/MessangerContainer';
+import {destroySocket, initSocket } from './services/WebSocketInicialization';
+import { ChatsProvider } from './hooks/ChatsStateContext';
 
 function App() {
-  const [sessionexist, setSessionExist] = useState<boolean | null>(null);
-  async function checkSession() {
-    const checkresponse = await fetch("http://localhost:3000/auth/check", { credentials: "include" });
-    const data = await checkresponse.json();
-    console.log(data.sessionSuccess);
-    setSessionExist(data.sessionSuccess);
-    console.log(sessionexist);
+  const [isSocket, setSocket] = useState<boolean>(false);
 
+  async function startSession() {
+    const data = await checkSessionRequest();
+    console.log(data.sessionSuccess);
+    if (data.sessionSuccess) {
+      const socket = await initSocket();
+      if (socket) {
+        console.log("cccc");
+        socket.on("connect", () => {
+          console.log("socket connected /from App/");
+          setSocket(true);
+        });
+
+        socket.on("disconnect", () => {
+          destroySocket();
+          console.log("socket disconnected /from App/");
+          setSocket(false);
+        });
+
+      }
+    }
   }
+
+
   useEffect(() => {
-    checkSession();
+    startSession();
+
   }, [])
+
 
 
   return (
     <div className='container'>
-      {sessionexist === false && <AuthContainer />}
+      {isSocket ? <ChatsProvider><MessangerContainer /></ChatsProvider> : <AuthContainer startSession={startSession} />}
     </div>
   )
 }

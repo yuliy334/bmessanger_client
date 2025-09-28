@@ -1,14 +1,26 @@
+import { useState } from "react";
 import SignUp from "../SignUp/SignUp";
 import "./AuthContainerStyle.css"
+import LogIn from "../Login/LogIn";
 
-function AuthContainer() {
+interface AuthContainerProps{
+    startSession:()=>void;
+}
+
+function AuthContainer({startSession}:AuthContainerProps) {
+    const [isSignUp, setIsSignUp] = useState<boolean>(true);
+
+
+
+
     return (
         <div className="authContainer">
             <div className="menu_bar">
-                <div id="left">log in</div>
-                <div id="right">sign up</div>
+                <div id="left" onClick={() => setIsSignUp(false)}>log in</div>
+                <div id="right" onClick={() => setIsSignUp(true)}>sign up</div>
             </div>
-            <SignUp/>
+            {isSignUp?<SignUp startSession={startSession}/>:<LogIn startSession={startSession}/>}
+            
         </div>
     )
 }

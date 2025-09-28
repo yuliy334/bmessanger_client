@@ -1,0 +1,41 @@
+
+
+.chats {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #DCCAE9;
+    float: left;
+    border-right: 5px solid rgb(0, 0, 0);
+    flex:1;
+}
+
+.addChatContainer {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+.chatBar {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    background-color: #9356A0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 2rem;
+    border-bottom: 5px solid rgb(0, 0, 0);
+}
+.chatBar span {
+    margin-left: 16px;
+}
+.ChatsList{
+    flex: 9;
+    position: relative;
+    height: 100%;
+    background-color: #DCCAE9;
+    overflow-y: auto;
+}

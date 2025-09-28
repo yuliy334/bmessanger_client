@@ -1,0 +1,24 @@
+.LogInContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.LogInContainer input {
+    width: 70%;
+    height: 20px;
+    margin: 10px;
+
+}
+
+.LogInContainer label {
+    font-weight: bold;
+}
+
+.LogInContainer h1{
+    color: red;
+    margin: 20px;
+}

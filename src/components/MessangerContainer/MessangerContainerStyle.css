@@ -1,0 +1,8 @@
+.MessangerContainer {
+    width: 100%;
+    height: 100%;
+    background-color: #2C1B47;
+    display: flex;
+    flex-direction: row;
+}
+

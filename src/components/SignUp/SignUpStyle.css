@@ -1,16 +1,28 @@
-.SignUpContainer{
+.SignUpContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
 }
-.SignUpContainer input{
+
+.SignUpContainer input {
     width: 70%;
     height: 20px;
     margin: 10px;
 
 }
-.SignUpContainer label{
+
+.SignUpContainer label {
     font-weight: bold;
+}
+
+.ExistNameErrorClass {
+    border: 2px solid red;
+    border-radius: 10px;
+}
+
+.NotConfirmedPasswordClass {
+    border: 2px solid red;
+    border-radius: 10px;
 }

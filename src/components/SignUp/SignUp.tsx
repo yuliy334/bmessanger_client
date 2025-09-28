@@ -1,43 +1,53 @@
 import { useState } from "react"
 import "./SignUpStyle.css"
-import type { AuthUser } from "../../types/user";
+import { signupCheck } from "./SignUpLogic";
 
-function SignUp() {
+interface SignUpContainerProps{
+    startSession:()=>void;
+}
 
-    const [FormUsername, setFormUsername] = useState<string>();
-    const [FormPassword, setFormPassword] = useState<string>();
-    const [confirmPassword, setconfirmPassword] = useState<string>();
+function SignUp({startSession}:SignUpContainerProps) {
 
-    async function sign() {
-        if (FormUsername && FormPassword) {
-            if (confirmPassword == FormPassword) {
-                const newUser: AuthUser = {
-                    username: FormUsername,
-                    password: FormPassword
-                }
-                const reg = await fetch("http://localhost:3000/auth/reg", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(newUser),
-                    credentials: "include",
-                });
-                const regInfo = await reg.json();
-                console.log(regInfo);
-            }
+    const [FormUsername, setFormUsername] = useState<string>("");
+    const [FormPassword, setFormPassword] = useState<string>("");
+    const [confirmPassword, setconfirmPassword] = useState<string>("");
+
+    const [errorUsernameClass, setErrorUsernameClass] = useState<string>("");
+    const [errorPasswordClass, setErrorPasswordClass] = useState<string>("");
+
+    async function sign(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        const signUpTry = await signupCheck(FormUsername, FormPassword, confirmPassword);
+        console.log(signUpTry);
+        switch (signUpTry) {
+            case "UsernameExist":
+                setErrorUsernameClass("ExistNameErrorClass");
+                setErrorPasswordClass("");
+                break;
+            case "NotComfiredPassword":
+                setErrorUsernameClass("");
+                setErrorPasswordClass("NotConfirmedPasswordClass")
+                break;
+            case "registrated":
+                startSession();
+                break;
+            default:
+                break;
         }
+
 
     }
 
 
 
     return (
-        <form className="SignUpContainer">
+        <form className="SignUpContainer" onSubmit={sign}>
             <label htmlFor="username">username:</label>
             <input
                 type="text"
                 id="username"
+                className={errorUsernameClass}
                 onChange={(e) => setFormUsername(e.target.value)}
                 required
             />
@@ -46,6 +56,7 @@ function SignUp() {
             <input
                 type="password"
                 id="password"
+                className={errorPasswordClass}
                 onChange={(e) => setFormPassword(e.target.value)}
                 required
             />
@@ -54,6 +65,7 @@ function SignUp() {
             <input
                 type="password"
                 id="ConfirmPassword"
+                className={errorPasswordClass}
                 onChange={(e) => {
                     setconfirmPassword(e.target.value);
                 }}
@@ -62,7 +74,7 @@ function SignUp() {
 
 
 
-            <button type="submit" onClick={sign}>Sign Up</button>
+            <button type="submit">Sign Up</button>
         </form>
     )
 }

@@ -1,0 +1,9 @@
+.ChatItem{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s;
+}
