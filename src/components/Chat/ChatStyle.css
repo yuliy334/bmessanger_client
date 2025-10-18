@@ -1,0 +1,42 @@
+.ChatContainer{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+.Messages{
+    flex: 9;
+    background-color: #1ad342;
+    border-bottom: 2px solid #ccc;
+    overflow-y: auto;
+}
+.WriteMessage{
+    flex: 1;
+    background-color: #953131;
+    padding: 10px;
+
+}
+.SendMessageForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.InputMessage {
+  width: 80%;
+  height: 40px;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.send-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+  color: gray;
+  font-size: 3em !important;
+}
+
+.send-icon:hover {
+  color: blue;          
+}
