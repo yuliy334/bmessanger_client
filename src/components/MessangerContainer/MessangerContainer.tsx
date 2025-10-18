@@ -1,10 +1,13 @@
 import "./MessangerContainerStyle.css"
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getSocket, initSocket } from "../../services/WebSocketInicialization";
-import { Chats } from "../Chats/Chats";
-import { Messages } from "../Messages/Messages";
-import type { chat, chats } from "../../types/chatsInfoTypes";
-import { ChatsContext, ChatsProvider } from "../../hooks/ChatsStateContext";
+import { Chats } from "../ChatsMenu/ChatsMenu";
+import { Messages } from "../MessagesContainer/MessagesContainer";
+import type { chat } from "../../types/chatsInfoTypes";
+import { ChatsContext } from "../../hooks/ChatsStateContext";
+import type { openChatInfo } from "../../types/openChatInfoTypes";
+
+
 
 export function MessangerContainer() {
 
@@ -14,16 +17,18 @@ export function MessangerContainer() {
     }
     const { state, dispatch } = chatsContext;
     const [IsNewPersonalChat, setNewPersonalChat] = useState<boolean>(false);
+    const [IsNewGroupChat, setNewGroupChat] = useState<boolean>(false);
+    const [OpenChatInfo, setOpenChatInfo] = useState<openChatInfo>({ isOpen: false, id: -1 });
+    const [ChatTitle, setChatTitle] = useState<string|null>(null);
 
     useEffect(() => {
         initSocket();
 
         const socket = getSocket();
         if (socket) {
-            console.log("it works1");
             socket.emit("getAllChats", (response: any) => {
                 const formattedChats: chat[] =
-                    response.map((c: any) => ({
+                    response.Chats.map((c: any) => ({
                         chatName: c.chatName,
                         id: c.id,
                         messages: c.messages.map((m: any) => ({
@@ -35,14 +40,17 @@ export function MessangerContainer() {
                             username: u.username
                         }))
                     }))
-                console.log(response);
 
 
-                dispatch({ type: "set_chats", payload: formattedChats });
-                console.log(state);
+                dispatch({
+                    type: "set_chats", payload: {
+                        username: response.userName.username,
+                        chats: formattedChats,
+                    },
+                });
             })
             socket.on("newChat", (chat: any) => {
-                console.log("sdfsdfsdfsd_1");
+                console.log("new chat works");
                 const formmatedChat: chat = {
                     chatName: chat.chatName, id: chat.id, messages: chat.messages.map((m: any) => ({
                         senderName: m.senderName,
@@ -58,10 +66,22 @@ export function MessangerContainer() {
 
 
     }, []);
+
+    useEffect(()=>{
+        if(OpenChatInfo.isOpen){
+            for(const SchatItem of state.chats){
+                if(SchatItem.id == OpenChatInfo.id){
+                    setChatTitle(SchatItem.chatName)
+                }
+            }
+        }
+    },[OpenChatInfo]);
+
+
     return (
         <div className="MessangerContainer">
-            <Chats setNewPersonalChat={setNewPersonalChat} ChatState={state} />
-            <Messages chatName="sdfs" IsNewPersonalChat={IsNewPersonalChat} />
+            <Chats setNewPersonalChat={setNewPersonalChat} setOpenChatInfo={setOpenChatInfo} />
+            <Messages chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} IsOpenChat={OpenChatInfo.isOpen} />
         </div>
     )
 }

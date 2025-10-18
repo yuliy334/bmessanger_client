@@ -1,4 +1,4 @@
-import type { CreatePrivateChatAnswerDto } from "../types/WebSocketTypes";
+import type { addPersonalChatAnswer, CreatePrivateChatAnswerDto } from "../types/WebSocketTypes";
 import { getSocket } from "./WebSocketInicialization";
 
 export async function deleteSession(): Promise<boolean> {
@@ -23,8 +23,8 @@ export async function CreatePrivateChat(username: string) {
             socket.emit(
                 "addPersonalChat",
                 { username },
-                (response: CreatePrivateChatAnswerDto) => {
-                    resolve(response.status);
+                (response: addPersonalChatAnswer) => {
+                    resolve(response);
                 }
             );
         });

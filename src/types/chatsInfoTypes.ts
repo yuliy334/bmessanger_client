@@ -13,6 +13,8 @@ export interface chat {
     users: user[];
 
 }
-export interface chats {
-    chats: chat[];
+
+export interface Info{
+    username:string,
+    chats:chat[]
 }

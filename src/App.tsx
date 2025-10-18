@@ -11,11 +11,9 @@ function App() {
 
   async function startSession() {
     const data = await checkSessionRequest();
-    console.log(data.sessionSuccess);
     if (data.sessionSuccess) {
       const socket = await initSocket();
       if (socket) {
-        console.log("cccc");
         socket.on("connect", () => {
           console.log("socket connected /from App/");
           setSocket(true);

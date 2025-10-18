@@ -5,12 +5,14 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import type { openChatInfo } from '../../types/openChatInfoTypes';
 
 interface COSDProps {
     setNewPersonalChat: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenChatInfo: React.Dispatch<React.SetStateAction<openChatInfo>>;
 }
 
-export default function ControlledOpenSpeedDial({ setNewPersonalChat }: COSDProps) {
+export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenChatInfo }: COSDProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -28,6 +30,9 @@ export default function ControlledOpenSpeedDial({ setNewPersonalChat }: COSDProp
             onClick: () => {
                 console.log("add private chat");
                 setNewPersonalChat(true);
+                setOpenChatInfo({
+                    id: -1, isOpen: false
+                });
             }
         },]
 

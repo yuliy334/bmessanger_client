@@ -1,28 +1,26 @@
 import React, { createContext, useReducer, useContext } from "react";
-import type { chat, chats } from "../types/chatsInfoTypes";
+import type { chat, Info } from "../types/chatsInfoTypes";
 
 
 type Action =
-    | { type: "set_chats"; payload: chat[] }
+    | { type: "set_chats"; payload: Info }
     | { type: "add_chat"; payload: chat }
 
-const initialChatsState: chats = { chats: [] }
+const initialChatsState: Info = { username:"", chats: [] }
 
-// Редюсер
-function chatsReducer(state: chats, action: Action): chats {
+function chatsReducer(state: Info, action: Action): Info {
     switch (action.type) {
         case "set_chats":
-            return { chats: action.payload };
+            return { ...action.payload };
         case "add_chat":
-            return { chats: [...state.chats, action.payload] };
+            return { ...state, chats: [...state.chats, action.payload] };
         default:
             return state;
     }
 }
 
-// Создаем контекст
 export const ChatsContext = createContext<{
-    state: chats;
+    state: Info;
     dispatch: React.Dispatch<Action>;
 } | null>(null);
 
