@@ -1,3 +1,4 @@
+import type { openChatInfo } from "../../types/openChatInfoTypes";
 import { Chat } from "../Chat/Chat";
 import { NewChat } from "../NewChat/NewChat";
 import "./MessagesContainerStyle.css"
@@ -6,10 +7,10 @@ interface MessagesProps {
     chatName: string;
     IsNewPersonalChat: boolean;
     IsNewGroupChat: boolean;
-    IsOpenChat: boolean;
+    OpenChatInfo: openChatInfo;
 }
 
-export function Messages({ chatName, IsNewPersonalChat, IsOpenChat, IsNewGroupChat }: MessagesProps) {
+export function MessagesContainer({ chatName, IsNewPersonalChat, OpenChatInfo, IsNewGroupChat }: MessagesProps) {
     const title = IsNewPersonalChat ? "create new personal chat" : IsNewGroupChat ? "create new group chat" : chatName;
     return (
         <div className="messagesContainer">
@@ -18,7 +19,7 @@ export function Messages({ chatName, IsNewPersonalChat, IsOpenChat, IsNewGroupCh
             </div>
             <div className="ChatBody">
                 {IsNewPersonalChat && <NewChat />}
-                {IsOpenChat && <Chat />}
+                {OpenChatInfo.isOpen && <Chat ChatId={OpenChatInfo.id}/>}
             </div>
 
         </div>

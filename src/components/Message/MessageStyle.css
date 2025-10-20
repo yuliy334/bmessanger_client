@@ -1,0 +1,22 @@
+.MessageContainer {
+    background-color: blue;
+    align-self: flex-start;
+    display: inline-block;
+    max-width: 35%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    width: auto;
+}
+
+.MyMessage {
+    align-self: flex-end;
+    background-color: rgb(41, 41, 196);
+}
+
+.NotMyMessage {
+    align-items: flex-start;
+    background-color: rgb(9, 9, 43);
+    color: azure;
+}

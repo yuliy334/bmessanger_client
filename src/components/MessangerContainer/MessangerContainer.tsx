@@ -2,7 +2,7 @@ import "./MessangerContainerStyle.css"
 import { useContext, useEffect, useState } from "react";
 import { getSocket, initSocket } from "../../services/WebSocketInicialization";
 import { Chats } from "../ChatsMenu/ChatsMenu";
-import { Messages } from "../MessagesContainer/MessagesContainer";
+import { MessagesContainer } from "../MessagesContainer/MessagesContainer";
 import type { chat } from "../../types/chatsInfoTypes";
 import { ChatsContext } from "../../hooks/ChatsStateContext";
 import type { openChatInfo } from "../../types/openChatInfoTypes";
@@ -32,8 +32,9 @@ export function MessangerContainer() {
                         chatName: c.chatName,
                         id: c.id,
                         messages: c.messages.map((m: any) => ({
-                            senderName: m.senderName,
-                            text: m.text
+                            senderName: m.sender.username,
+                            text: m.text,
+                            createdAt:m.createdAt
                         })),
                         type: c.type,
                         users: c.users.map((u: any) => ({
@@ -48,6 +49,7 @@ export function MessangerContainer() {
                         chats: formattedChats,
                     },
                 });
+                console.log(formattedChats);
             })
             socket.on("newChat", (chat: any) => {
                 console.log("new chat works");
@@ -81,7 +83,7 @@ export function MessangerContainer() {
     return (
         <div className="MessangerContainer">
             <Chats setNewPersonalChat={setNewPersonalChat} setOpenChatInfo={setOpenChatInfo} />
-            <Messages chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} IsOpenChat={OpenChatInfo.isOpen} />
+            <MessagesContainer chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} OpenChatInfo={OpenChatInfo} />
         </div>
     )
 }

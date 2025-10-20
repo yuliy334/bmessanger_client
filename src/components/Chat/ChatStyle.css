@@ -9,6 +9,9 @@
     background-color: #1ad342;
     border-bottom: 2px solid #ccc;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    
 }
 .WriteMessage{
     flex: 1;

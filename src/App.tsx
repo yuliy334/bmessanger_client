@@ -15,13 +15,13 @@ function App() {
       const socket = await initSocket();
       if (socket) {
         socket.on("connect", () => {
-          console.log("socket connected /from App/");
+          console.log("socket connected");
           setSocket(true);
         });
 
         socket.on("disconnect", () => {
           destroySocket();
-          console.log("socket disconnected /from App/");
+          console.log("socket disconnected");
           setSocket(false);
         });
 

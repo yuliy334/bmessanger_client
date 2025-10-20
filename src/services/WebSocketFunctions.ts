@@ -1,3 +1,4 @@
+import type { messageSend } from "../types/messageSendType";
 import type { addPersonalChatAnswer, CreatePrivateChatAnswerDto } from "../types/WebSocketTypes";
 import { getSocket } from "./WebSocketInicialization";
 
@@ -29,4 +30,13 @@ export async function CreatePrivateChat(username: string) {
             );
         });
     }
+}
+export async function SendMesssage(data:messageSend) {
+    const socket = getSocket();
+    if (!socket) {
+        console.log("no session");
+        return false;
+    }
+
+    socket.emit("sendMessage",data);
 }

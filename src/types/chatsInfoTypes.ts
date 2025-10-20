@@ -4,6 +4,7 @@ export interface user {
 export interface message {
     senderName: string;
     text: string;
+    createdAt: Date
 }
 export interface chat {
     chatName: string;
@@ -14,7 +15,7 @@ export interface chat {
 
 }
 
-export interface Info{
-    username:string,
-    chats:chat[]
+export interface Info {
+    username: string,
+    chats: chat[]
 }
