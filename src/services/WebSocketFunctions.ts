@@ -36,12 +36,10 @@ export async function SendMesssage(data: messageSend) {
     const socket = getSocket();
     if (!socket) {
         console.log("no session");
-        return false;
+        throw new Error("NoSocketExist");
     }
-    return new Promise((resolve) => {
-        console.log("111");
+    return new Promise<message>((resolve) => {
         socket.emit("sendMessage", data, (response:message) => {
-            console.log("222");
             resolve(response);
         });
     })

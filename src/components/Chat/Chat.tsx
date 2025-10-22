@@ -24,7 +24,10 @@ export function Chat({ ChatId }: ChatProps) {
     async function SendHandel() {
         const messageBody: messageSend = { text: messsageText, chatId: ChatId };
         const NewMessage = await SendMesssage(messageBody);
-        console.log("dsfsfs", NewMessage);
+        console.log("newMessage:   ",NewMessage);
+        dispatch({type: "set_message", payload:NewMessage});
+        console.log(state);
+        // console.log("dsfsfs", NewMessage);
     }
     return (
         <div className="ChatContainer">

@@ -31,7 +31,7 @@ export function MessangerContainer() {
                     type: "set_chats", payload: {
                         username: response.username,
                         chats: response.chats,
-                    },
+                    }
                 });
                 console.log(response.chats);
             })
