@@ -23,12 +23,13 @@ export function Chat({ ChatId }: ChatProps) {
     console.log(ChatMessagesId);
     async function SendHandel() {
         const messageBody: messageSend = { text: messsageText, chatId: ChatId };
-        await SendMesssage(messageBody);
+        const NewMessage = await SendMesssage(messageBody);
+        console.log("dsfsfs", NewMessage);
     }
     return (
         <div className="ChatContainer">
             <div className="Messages">
-                {state.chats[ChatMessagesId].messages.map((m:message) => (<Message key={m.createdAt.toString()+m.senderName} messageData={m} />))}
+                {state.chats[ChatMessagesId].messages.map((m: message) => (<Message key={m.createdAt.toString() + m.senderName} messageData={m} />))}
 
 
 

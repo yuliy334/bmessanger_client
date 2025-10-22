@@ -4,6 +4,7 @@ export interface user {
 export interface message {
     senderName: string;
     text: string;
+    chatId: number;
     createdAt: Date
 }
 export interface chat {

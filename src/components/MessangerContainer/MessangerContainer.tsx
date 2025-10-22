@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { getSocket, initSocket } from "../../services/WebSocketInicialization";
 import { Chats } from "../ChatsMenu/ChatsMenu";
 import { MessagesContainer } from "../MessagesContainer/MessagesContainer";
-import type { chat } from "../../types/chatsInfoTypes";
+import type { chat, Info } from "../../types/chatsInfoTypes";
 import { ChatsContext } from "../../hooks/ChatsStateContext";
 import type { openChatInfo } from "../../types/openChatInfoTypes";
 
@@ -26,43 +26,18 @@ export function MessangerContainer() {
 
         const socket = getSocket();
         if (socket) {
-            socket.emit("getAllChats", (response: any) => {
-                const formattedChats: chat[] =
-                    response.Chats.map((c: any) => ({
-                        chatName: c.chatName,
-                        id: c.id,
-                        messages: c.messages.map((m: any) => ({
-                            senderName: m.sender.username,
-                            text: m.text,
-                            createdAt:m.createdAt
-                        })),
-                        type: c.type,
-                        users: c.users.map((u: any) => ({
-                            username: u.username
-                        }))
-                    }))
-
-
+            socket.emit("getAllChats", (response: Info) => {
                 dispatch({
                     type: "set_chats", payload: {
-                        username: response.userName.username,
-                        chats: formattedChats,
+                        username: response.username,
+                        chats: response.chats,
                     },
                 });
-                console.log(formattedChats);
+                console.log(response.chats);
             })
-            socket.on("newChat", (chat: any) => {
-                console.log("new chat works");
-                const formmatedChat: chat = {
-                    chatName: chat.chatName, id: chat.id, messages: chat.messages.map((m: any) => ({
-                        senderName: m.senderName,
-                        text: m.text
-                    })),
-                    type: chat.type, users: chat.users.map((u: any) => ({
-                        username: u.username
-                    }))
-                }
-                dispatch({ type: "add_chat", payload: formmatedChat })
+            socket.on("newChat", (chat: chat) => {
+                console.log("new chat works", chat);
+                dispatch({ type: "add_chat", payload: chat })
             })
         }
 
