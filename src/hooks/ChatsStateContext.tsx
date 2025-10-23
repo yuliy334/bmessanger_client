@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useContext } from "react";
 import type { chat, Info, message } from "../types/chatsInfoTypes";
 
 
-type Action =
+export type Action =
     | { type: "set_chats"; payload: Info }
     | { type: "add_chat"; payload: chat }
     | {type: "set_message"; payload:message}

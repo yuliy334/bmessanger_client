@@ -1,4 +1,5 @@
-import type { message } from "../types/chatsInfoTypes";
+import type { Action } from "../hooks/ChatsStateContext";
+import type { Info, message } from "../types/chatsInfoTypes";
 import type { messageSend } from "../types/messageSendType";
 import type { addPersonalChatAnswer, CreatePrivateChatAnswerDto } from "../types/WebSocketTypes";
 import { getSocket } from "./WebSocketInicialization";
@@ -39,9 +40,24 @@ export async function SendMesssage(data: messageSend) {
         throw new Error("NoSocketExist");
     }
     return new Promise<message>((resolve) => {
-        socket.emit("sendMessage", data, (response:message) => {
+        socket.emit("sendMessage", data, (response: message) => {
             resolve(response);
         });
     })
 
+}
+
+export async function getAllChats(dispatch: React.Dispatch<Action>) {
+    const socket = getSocket();
+    if (socket) {
+        socket.emit("getAllChats", (response: Info) => {
+            dispatch({
+                type: "set_chats", payload: {
+                    username: response.username,
+                    chats: response.chats,
+                }
+            });
+            console.log(response.chats);
+        })
+    }
 }

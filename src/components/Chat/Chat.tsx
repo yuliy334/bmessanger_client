@@ -21,7 +21,9 @@ export function Chat({ ChatId }: ChatProps) {
     }
     const { state, dispatch } = chatsContext;
     const ChatMessagesId = state.chats.findIndex((a) => a.id == ChatId);
-    async function SendHandel() {
+    async function SendHandel(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setMessageText("");
         const messageBody: messageSend = { text: messsageText, chatId: ChatId };
         const NewMessage = await SendMesssage(messageBody);
         dispatch({ type: "set_message", payload: NewMessage });
@@ -34,7 +36,7 @@ export function Chat({ ChatId }: ChatProps) {
             boxRef.current.scrollTop = boxRef.current.scrollHeight;
         }
 
-    }, [state])
+    }, [state.chats[ChatMessagesId].messages])
 
 
     return (
@@ -46,12 +48,12 @@ export function Chat({ ChatId }: ChatProps) {
 
             </div>
             <div className="WriteMessage">
-                <form className="SendMessageForm">
-                    <input onChange={(e) => setMessageText(e.target.value)} className="InputMessage">
+                <form className="SendMessageForm" onSubmit={SendHandel}>
+                    <input value={messsageText} onChange={(e) => setMessageText(e.target.value)} className="InputMessage">
                     </input>
-                    <div onClick={SendHandel}>
+                    <button type="submit" className="buttonSend">
                         <SendRoundedIcon className="send-icon" />
-                    </div>
+                    </button>
                 </form>
             </div>
         </div>
