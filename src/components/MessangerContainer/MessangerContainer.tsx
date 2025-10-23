@@ -7,6 +7,7 @@ import type { chat, Info } from "../../types/chatsInfoTypes";
 import { ChatsContext } from "../../hooks/ChatsStateContext";
 import type { openChatInfo } from "../../types/openChatInfoTypes";
 import { getAllChats } from "../../services/WebSocketFunctions";
+import { NewChatEvent, NewMessageEvent } from "../../services/WebSocketEvents";
 
 
 
@@ -25,24 +26,8 @@ export function MessangerContainer() {
     useEffect(() => {
         initSocket();
         getAllChats(dispatch);
-        const socket = getSocket();
-        if (socket) {
-            // socket.emit("getAllChats", (response: Info) => {
-            //     dispatch({
-            //         type: "set_chats", payload: {
-            //             username: response.username,
-            //             chats: response.chats,
-            //         }
-            //     });
-            //     console.log(response.chats);
-            // })
-            socket.on("newChat", (chat: chat) => {
-                console.log("new chat works", chat);
-                dispatch({ type: "add_chat", payload: chat })
-            })
-        }
-
-
+        NewChatEvent(dispatch);
+        NewMessageEvent(dispatch);
     }, []);
 
     useEffect(()=>{

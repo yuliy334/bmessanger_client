@@ -41,6 +41,7 @@ export async function SendMesssage(data: messageSend) {
     }
     return new Promise<message>((resolve) => {
         socket.emit("sendMessage", data, (response: message) => {
+            console.log(response);
             resolve(response);
         });
     })
