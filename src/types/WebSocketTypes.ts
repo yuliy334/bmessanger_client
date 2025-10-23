@@ -1,16 +1,26 @@
-export interface CreatePrivateChatAnswerDto{
-    status:string;
+export interface CreatePrivateChatAnswerDto {
+    status: string;
 }
 export interface NewChatResult {
     chat: any;
-    socketid: string;
 }
 export interface creatingChatAnswer {
     success: boolean;
     error?: string;
-    chatId?: number|undefined;
+    chatId?: number | undefined;
 }
 export interface addPersonalChatAnswer {
     newChatResult: NewChatResult[];
+    creatingChatAnswer: creatingChatAnswer;
+}
+export interface addUserToGroupChat {
+    IsExist: boolean;
+    error?: string;
+}
+export interface CreateGroupChat {
+    users: string[];
+    title: string;
+}
+export interface GroupChatAnswer {
     creatingChatAnswer: creatingChatAnswer;
 }

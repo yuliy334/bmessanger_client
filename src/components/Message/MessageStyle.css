@@ -2,9 +2,13 @@
     background-color: blue;
     align-self: flex-start;
     display: inline-block;
+    min-width: 10%;
     max-width: 35%;
-    margin: 10px;
-    padding: 10px;
+    margin: 5px;
+    margin-left: 10px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 10px;
     overflow-wrap: break-word;
     width: auto;
@@ -12,11 +16,26 @@
 
 .MyMessage {
     align-self: flex-end;
-    background-color: rgb(41, 41, 196);
+    background-color: rgb(117, 36, 255);
 }
 
 .NotMyMessage {
     align-items: flex-start;
     background-color: rgb(9, 9, 43);
     color: azure;
+}
+
+.MessageSender {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.MyMessage p.time {
+    font-size: 0.7em;
+    color: rgb(38, 7, 7);
+    text-align: right;
+}
+.NotMyMessage p.time {
+    font-size: 0.7em;
+    color: azure(38, 7, 7);
+    text-align: right;
 }

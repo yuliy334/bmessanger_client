@@ -43,7 +43,7 @@ export function MessangerContainer() {
 
     return (
         <div className="MessangerContainer">
-            <Chats setNewPersonalChat={setNewPersonalChat} setOpenChatInfo={setOpenChatInfo} />
+            <Chats setNewGroupChat={setNewGroupChat} setNewPersonalChat={setNewPersonalChat} setOpenChatInfo={setOpenChatInfo} />
             <MessagesContainer chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} OpenChatInfo={OpenChatInfo} />
         </div>
     )

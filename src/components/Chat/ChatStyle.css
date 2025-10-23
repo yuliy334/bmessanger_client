@@ -6,16 +6,18 @@
 }
 .Messages{
     flex: 9;
-    background-color: #1ad342;
+    background-color: #00085f;
     border-bottom: 2px solid #ccc;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    border: none;
     
 }
 .WriteMessage{
     flex: 1;
-    background-color: #953131;
+    background-color: #022030;
+    border: none;
     padding: 10px;
 
 }

@@ -10,9 +10,10 @@ import type { openChatInfo } from "../../types/openChatInfoTypes";
 
 interface ChatProps {
     setNewPersonalChat: React.Dispatch<React.SetStateAction<boolean>>;
+    setNewGroupChat: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenChatInfo: React.Dispatch<React.SetStateAction<openChatInfo>>;
 }
-export function Chats({ setNewPersonalChat, setOpenChatInfo }: ChatProps) {
+export function Chats({ setNewPersonalChat, setOpenChatInfo,setNewGroupChat }: ChatProps) {
     const chatsContext = useContext(ChatsContext);
     if (!chatsContext) {
         throw new Error("NoChatContext");
@@ -25,6 +26,8 @@ export function Chats({ setNewPersonalChat, setOpenChatInfo }: ChatProps) {
             id:id
         });
         setNewPersonalChat(false);
+        setNewGroupChat(false);
+
     }
 
 
@@ -40,11 +43,12 @@ export function Chats({ setNewPersonalChat, setOpenChatInfo }: ChatProps) {
             <div className="ChatsList">
 
                 {state.chats.map((c) => (
-                    <ChatItem key={c.id} chatName={c.chatName} onClick={() => handleChat(c.id)} />
+                    
+                    <ChatItem key={c.id} lastMessage={c.messages.at(0)} chatName={c.chatName} onClick={() => handleChat(c.id)} />
                 ))}</div>
             <div className="addChatContainer">
 
-                <ControlledOpenSpeedDial setNewPersonalChat={setNewPersonalChat}  setOpenChatInfo={setOpenChatInfo}/>
+                <ControlledOpenSpeedDial setNewGroupChat={setNewGroupChat} setNewPersonalChat={setNewPersonalChat}  setOpenChatInfo={setOpenChatInfo}/>
             </div>
         </div>
     )

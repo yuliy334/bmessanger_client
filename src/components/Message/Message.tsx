@@ -25,7 +25,7 @@ export function Message({ messageData }: MessageProps) {
         <div className={WhosMessage}>
             <p className="MessageSender">{messageData.senderName}</p>
             <p className="Message">{messageData.text}</p>
-            <p>{new Date(messageData.createdAt).toTimeString().split(' ')[0]}</p>
+            <p className="time">{new Date(messageData.createdAt).toTimeString().split(' ')[0]}</p>
         </div>
     )
 }

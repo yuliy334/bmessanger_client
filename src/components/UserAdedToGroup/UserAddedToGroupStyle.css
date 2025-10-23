@@ -1,0 +1,23 @@
+.UserAddedToGroup{
+    border-radius: 20px;
+    background-color: #935abb;
+    padding: 10px;
+    color: white;
+    flex:1;
+    max-width: 20%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    flex-direction: row;
+
+
+}
+.deleteUser{
+    cursor: pointer;
+    font-weight: bold;
+}
+.deleteUser:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(241, 50, 50);
+    border-radius: 30px;
+}

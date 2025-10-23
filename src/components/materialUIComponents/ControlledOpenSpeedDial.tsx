@@ -9,10 +9,11 @@ import type { openChatInfo } from '../../types/openChatInfoTypes';
 
 interface COSDProps {
     setNewPersonalChat: React.Dispatch<React.SetStateAction<boolean>>;
+    setNewGroupChat: React.Dispatch<React.SetStateAction<boolean>>;
     setOpenChatInfo: React.Dispatch<React.SetStateAction<openChatInfo>>;
 }
 
-export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenChatInfo }: COSDProps) {
+export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenChatInfo,setNewGroupChat }: COSDProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -22,6 +23,11 @@ export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenCha
         {
             icon: <GroupAddIcon />, name: 'add group chat', onClick: () => {
                 console.log("add group");
+                setNewGroupChat(true);
+                setNewPersonalChat(false);
+                setOpenChatInfo({
+                    id: -1, isOpen: false
+                });
             }
         },
         {
@@ -30,6 +36,7 @@ export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenCha
             onClick: () => {
                 console.log("add private chat");
                 setNewPersonalChat(true);
+                setNewGroupChat(false);
                 setOpenChatInfo({
                     id: -1, isOpen: false
                 });

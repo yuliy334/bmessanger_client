@@ -1,7 +1,7 @@
 import type { Action } from "../hooks/ChatsStateContext";
 import type { Info, message } from "../types/chatsInfoTypes";
 import type { messageSend } from "../types/messageSendType";
-import type { addPersonalChatAnswer, CreatePrivateChatAnswerDto } from "../types/WebSocketTypes";
+import type { addPersonalChatAnswer, addUserToGroupChat, CreateGroupChat, CreatePrivateChatAnswerDto, GroupChatAnswer } from "../types/WebSocketTypes";
 import { getSocket } from "./WebSocketInicialization";
 
 export async function deleteSession(): Promise<boolean> {
@@ -28,6 +28,29 @@ export async function CreatePrivateChat(username: string) {
                 { username },
                 (response: addPersonalChatAnswer) => {
                     resolve(response);
+                }
+            );
+        });
+    }
+}
+export async function CreatePublicChat(data: CreateGroupChat) {
+
+    const socket = getSocket();
+    if (!socket) {
+        console.log("no session");
+        return undefined;
+    }
+    else {
+
+        return new Promise((resolve) => {
+            console.log("sdfsdfsdf hello");
+            socket.emit(
+                "addGroupChat",
+                data,
+                (response: GroupChatAnswer) => {
+                    console.log(response);
+                    resolve(response);
+
                 }
             );
         });
@@ -60,5 +83,17 @@ export async function getAllChats(dispatch: React.Dispatch<Action>) {
             });
             console.log(response.chats);
         })
+    }
+}
+export async function IsUserExist(username: string) {
+    const socket = getSocket();
+    if (socket) {
+        return new Promise<addUserToGroupChat>((resolve) => {
+            socket.emit("IsUserExist", { username: username }, (response: addUserToGroupChat) => {
+                console.log("object: ", response);
+                resolve(response);
+            })
+        })
+
     }
 }
