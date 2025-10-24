@@ -10,6 +10,7 @@ export type Action =
     | { type: "set_message"; payload: message }
     | { type: "add_user"; payload: AddedUserAnswer }
     | { type: "delete_chat"; payload: number }
+    | { type: "delete_user"; payload: AddedUserAnswer }
 
 const initialChatsState: Info = { username: "", chats: [] }
 
@@ -19,7 +20,7 @@ function chatsReducer(state: Info, action: Action): Info {
             return { ...action.payload };
         case "add_chat":
             const ChatExists = state.chats.some((chat) => chat.id == action.payload.id);
-            if(ChatExists){
+            if (ChatExists) {
                 return state
             }
             return { ...state, chats: [action.payload, ...state.chats] };
@@ -56,6 +57,26 @@ function chatsReducer(state: Info, action: Action): Info {
             };
             console.log(NewDeletedState);
             return NewDeletedState;
+        case "delete_user":
+            const userExists = state.chats.at(action.payload.chatId)?.users.some((user) => user.username == action.payload.username);
+            if (!userExists) {
+                return state;
+            }
+            
+            const NewChatWithoutUser = state.chats.at(action.payload.chatId) 
+            if(!NewChatWithoutUser){
+                return state;
+            }
+            NewChatWithoutUser.users = NewChatWithoutUser.users.filter((user) => user.username != action.payload.username);
+            const NewDeletedUserState = {
+                ...state,
+                chats: state.chats.map((chat) =>
+                    chat.id === action.payload.chatId ? NewChatWithoutUser : chat
+                )
+            };
+
+            return NewDeletedUserState;
+
         default:
             return state;
     }

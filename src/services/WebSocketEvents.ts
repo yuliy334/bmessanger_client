@@ -2,7 +2,6 @@ import type React from "react";
 import type { Action } from "../hooks/ChatsStateContext";
 import { getSocket } from "./WebSocketInicialization";
 import type { chat, message } from "../types/chatsInfoTypes.ts"
-import { Socket } from "socket.io-client";
 import type { AddedUserAnswer } from "../types/WebSocketTypes.ts";
 
 export function NewChatEvent(dispatch: React.Dispatch<Action>) {
@@ -45,6 +44,15 @@ export function ChatDeleted(dispatch: React.Dispatch<Action>){
         socket.on("DeleteChat", (chatId:number) =>{
             dispatch({type:"delete_chat", payload:chatId});
             console.log(chatId);
+        })
+    }
+}
+export function UserDeleted(dispatch: React.Dispatch<Action>){
+    const socket = getSocket();
+    if(socket){
+        socket.on("DeleteChat", (message:AddedUserAnswer) =>{
+            dispatch({type:"delete_user", payload:message});
+            console.log(message);
         })
     }
 }

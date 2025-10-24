@@ -7,7 +7,7 @@ import type { chat, Info, user } from "../../types/chatsInfoTypes";
 import { ChatsContext } from "../../hooks/ChatsStateContext";
 import type { openChatInfo } from "../../types/openChatInfoTypes";
 import { getAllChats } from "../../services/WebSocketFunctions";
-import { ChatDeleted, NewChatEvent, NewMessageEvent, UserAdded } from "../../services/WebSocketEvents";
+import { ChatDeleted, NewChatEvent, NewMessageEvent, UserAdded, UserDeleted } from "../../services/WebSocketEvents";
 
 
 
@@ -31,6 +31,7 @@ export function MessangerContainer() {
         NewMessageEvent(dispatch);
         UserAdded(dispatch);
         ChatDeleted(dispatch);
+        UserDeleted(dispatch);
     }, []);
 
     useEffect(()=>{

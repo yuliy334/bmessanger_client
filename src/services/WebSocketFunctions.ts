@@ -23,10 +23,12 @@ export async function CreatePrivateChat(username: string) {
     }
     else {
         return new Promise<creatingChatAnswer>((resolve) => {
+            
             socket.emit(
                 "addPersonalChat",
                 { username },
                 (response: creatingChatAnswer) => {
+                    console.log(response);
                     resolve(response);
                 }
             );
