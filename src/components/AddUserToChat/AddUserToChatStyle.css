@@ -1,0 +1,50 @@
+.AddUserContainer{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: #070a60b5;
+}
+.closebutton{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+}   
+.closebutton:hover{
+    color: #ff4646;
+}
+.AddUser{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+}
+
+.AddUserContainer input{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 70%;
+}
+.AddUserContainer button{
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.AddUserContainer button:hover{
+    background-color: #45a049;
+}

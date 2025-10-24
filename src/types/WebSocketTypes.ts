@@ -24,3 +24,7 @@ export interface CreateGroupChat {
 export interface GroupChatAnswer {
     creatingChatAnswer: creatingChatAnswer;
 }
+export interface AddedUserAnswer{
+    username:string;
+    chatId:number;
+}

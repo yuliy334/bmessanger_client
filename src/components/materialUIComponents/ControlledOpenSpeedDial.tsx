@@ -28,6 +28,7 @@ export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenCha
                 setOpenChatInfo({
                     id: -1, isOpen: false
                 });
+                console.log("this is");
             }
         },
         {
@@ -40,6 +41,7 @@ export default function ControlledOpenSpeedDial({ setNewPersonalChat, setOpenCha
                 setOpenChatInfo({
                     id: -1, isOpen: false
                 });
+                console.log("this is");
             }
         },]
 

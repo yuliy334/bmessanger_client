@@ -1,7 +1,7 @@
 import type { Action } from "../hooks/ChatsStateContext";
 import type { Info, message } from "../types/chatsInfoTypes";
 import type { messageSend } from "../types/messageSendType";
-import type { addPersonalChatAnswer, addUserToGroupChat, CreateGroupChat, CreatePrivateChatAnswerDto, GroupChatAnswer } from "../types/WebSocketTypes";
+import type {addUserToGroupChat, CreateGroupChat, creatingChatAnswer, GroupChatAnswer } from "../types/WebSocketTypes";
 import { getSocket } from "./WebSocketInicialization";
 
 export async function deleteSession(): Promise<boolean> {
@@ -22,11 +22,11 @@ export async function CreatePrivateChat(username: string) {
         return undefined;
     }
     else {
-        return new Promise((resolve) => {
+        return new Promise<creatingChatAnswer>((resolve) => {
             socket.emit(
                 "addPersonalChat",
                 { username },
-                (response: addPersonalChatAnswer) => {
+                (response: creatingChatAnswer) => {
                     resolve(response);
                 }
             );
@@ -97,3 +97,17 @@ export async function IsUserExist(username: string) {
 
     }
 }
+export async function AddUserToChatFunc(chatId: number, username: string) {
+    const socket = getSocket();
+    if (socket) {
+        socket.emit("addUserToChat", { username: username, chatId:chatId })
+    }
+}
+export async function DeleteUserFromChat(chatId:number) {
+    console.log("object", chatId);
+    const socket = getSocket();
+    if (socket) {
+        socket.emit("deleteUserFromChat", {chatId})
+    }
+}
+

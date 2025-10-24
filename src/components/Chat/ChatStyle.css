@@ -45,3 +45,8 @@
 .send-icon:hover {
   color: blue;          
 }
+.buttonSend {
+  background: none;
+  border: none;
+  padding: 0;
+}

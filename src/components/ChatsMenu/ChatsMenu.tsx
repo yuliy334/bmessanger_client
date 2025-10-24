@@ -20,11 +20,14 @@ export function Chats({ setNewPersonalChat, setOpenChatInfo,setNewGroupChat }: C
     }
     const { state, dispatch } = chatsContext;
 
-    function handleChat(id:number){
+    function handleChat(id:number,type:string){
         setOpenChatInfo({
             isOpen:true,
-            id:id
+            id:id,
+            type:type
+        
         });
+        console.log("type: ",type);
         setNewPersonalChat(false);
         setNewGroupChat(false);
 
@@ -44,7 +47,7 @@ export function Chats({ setNewPersonalChat, setOpenChatInfo,setNewGroupChat }: C
 
                 {state.chats.map((c) => (
                     
-                    <ChatItem key={c.id} lastMessage={c.messages.at(0)} chatName={c.chatName} onClick={() => handleChat(c.id)} />
+                    <ChatItem key={c.id} chatStatus={c.type} lastMessage={c.messages.at(0)} chatName={c.chatName} onClick={() => handleChat(c.id, c.type) } />
                 ))}</div>
             <div className="addChatContainer">
 

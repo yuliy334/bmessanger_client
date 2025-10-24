@@ -1,7 +1,8 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import type { AuthUser } from "../../types/user";
 import { logInCheck } from "./LogInLogic";
 import "./LogInStyle.css"
+import toast, { Toaster } from "react-hot-toast";
 
 
 interface LogInUpContainerProps{
@@ -12,27 +13,24 @@ function LogIn({startSession}:LogInUpContainerProps) {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [errorAuth, setErrorAuth] = useState<boolean>(false);
 
     async function login(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const newUser:AuthUser = {username,password};
         const logInAnswer = await logInCheck(newUser);
         if(logInAnswer.login){
-            console.log("works");
             startSession();
-            console.log("work2");
         }
         else{
-            setErrorAuth(true);
+            toast.error("wrong username or password");
         }
 
     }
 
 
-
     return (
         <form className="LogInContainer" onSubmit={login}>
+            <Toaster position="top-right" />
             <label htmlFor="username">username:</label>
             <input
                 type="text"
@@ -52,7 +50,6 @@ function LogIn({startSession}:LogInUpContainerProps) {
 
 
             <button type="submit">Log In</button>
-            {errorAuth && <h1>wrong username or password</h1>}
         </form>
     )
 }

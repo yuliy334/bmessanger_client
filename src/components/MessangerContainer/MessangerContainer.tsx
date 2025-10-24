@@ -2,12 +2,12 @@ import "./MessangerContainerStyle.css"
 import { useContext, useEffect, useState } from "react";
 import { getSocket, initSocket } from "../../services/WebSocketInicialization";
 import { Chats } from "../ChatsMenu/ChatsMenu";
-import { MessagesContainer } from "../MessagesContainer/MessagesContainer";
-import type { chat, Info } from "../../types/chatsInfoTypes";
+import { ChatContainer } from "../ChatContainer/ChatContainer";
+import type { chat, Info, user } from "../../types/chatsInfoTypes";
 import { ChatsContext } from "../../hooks/ChatsStateContext";
 import type { openChatInfo } from "../../types/openChatInfoTypes";
 import { getAllChats } from "../../services/WebSocketFunctions";
-import { NewChatEvent, NewMessageEvent } from "../../services/WebSocketEvents";
+import { ChatDeleted, NewChatEvent, NewMessageEvent, UserAdded } from "../../services/WebSocketEvents";
 
 
 
@@ -22,12 +22,15 @@ export function MessangerContainer() {
     const [IsNewGroupChat, setNewGroupChat] = useState<boolean>(false);
     const [OpenChatInfo, setOpenChatInfo] = useState<openChatInfo>({ isOpen: false, id: -1 });
     const [ChatTitle, setChatTitle] = useState<string|null>(null);
+    const [UsersInOpenChat, setUsersInOpenChat] = useState<user[]>([]);
 
     useEffect(() => {
         initSocket();
         getAllChats(dispatch);
         NewChatEvent(dispatch);
         NewMessageEvent(dispatch);
+        UserAdded(dispatch);
+        ChatDeleted(dispatch);
     }, []);
 
     useEffect(()=>{
@@ -35,6 +38,7 @@ export function MessangerContainer() {
             for(const SchatItem of state.chats){
                 if(SchatItem.id == OpenChatInfo.id){
                     setChatTitle(SchatItem.chatName)
+                    setUsersInOpenChat(SchatItem.users);
                 }
             }
         }
@@ -44,7 +48,7 @@ export function MessangerContainer() {
     return (
         <div className="MessangerContainer">
             <Chats setNewGroupChat={setNewGroupChat} setNewPersonalChat={setNewPersonalChat} setOpenChatInfo={setOpenChatInfo} />
-            <MessagesContainer chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} OpenChatInfo={OpenChatInfo} />
+            <ChatContainer chatUsers={UsersInOpenChat} chatName={ChatTitle??"choose a chat"} IsNewPersonalChat={IsNewPersonalChat} IsNewGroupChat={IsNewGroupChat} OpenChatInfo={OpenChatInfo} />
         </div>
     )
 }

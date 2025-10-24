@@ -1,6 +1,7 @@
 import { useState } from "react"
 import "./SignUpStyle.css"
 import { signupCheck } from "./SignUpLogic";
+import toast, { Toaster } from "react-hot-toast";
 
 interface SignUpContainerProps{
     startSession:()=>void;
@@ -24,10 +25,12 @@ function SignUp({startSession}:SignUpContainerProps) {
             case "UsernameExist":
                 setErrorUsernameClass("ExistNameErrorClass");
                 setErrorPasswordClass("");
+                toast.error("user with this username exist");
                 break;
             case "NotComfiredPassword":
                 setErrorUsernameClass("");
                 setErrorPasswordClass("NotConfirmedPasswordClass")
+                toast.error("password must be same in to fields");
                 break;
             case "registrated":
                 startSession();
@@ -43,6 +46,7 @@ function SignUp({startSession}:SignUpContainerProps) {
 
     return (
         <form className="SignUpContainer" onSubmit={sign}>
+            <Toaster position="top-right" />
             <label htmlFor="username">username:</label>
             <input
                 type="text"

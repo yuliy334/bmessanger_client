@@ -32,17 +32,16 @@ export function Chat({ ChatId }: ChatProps) {
 
     useEffect(() => {
         if (boxRef.current) {
-            console.log("dsfsff");
             boxRef.current.scrollTop = boxRef.current.scrollHeight;
         }
 
-    }, [state.chats[ChatMessagesId].messages])
+    }, [state.chats[ChatMessagesId]?.messages])
 
 
     return (
         <div className="ChatContainer">
             <div className="Messages"  ref={boxRef}>
-                {state.chats[ChatMessagesId].messages.map((m: message) => (<Message key={m.createdAt.toString() + m.senderName} messageData={m} />))}
+                {state.chats[ChatMessagesId]?.messages?.map((m: message) => (<Message key={m.createdAt.toString() + m.senderName} messageData={m} />))}
 
 
 
