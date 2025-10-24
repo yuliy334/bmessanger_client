@@ -78,7 +78,7 @@ function SignUp({startSession}:SignUpContainerProps) {
 
 
 
-            <button type="submit">Sign Up</button>
+            <button type="submit" className="SignUpBtn">Sign Up</button>
         </form>
     )
 }

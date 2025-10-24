@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+
 import "./ConfirmExitFieltStyle.css"
-import { ChatsContext } from "../../hooks/ChatsStateContext";
 import { DeleteUserFromChat } from "../../services/WebSocketFunctions";
+import type { openChatInfo } from "../../types/openChatInfoTypes";
 
 
 interface ConfirmExitFieldProps {
     chatId: number;
     setIsExitConfirm: React.Dispatch<boolean>;
+    setOpenChatInfo: React.Dispatch<openChatInfo>;
 }
 
-export function ConfirmExitField({ setIsExitConfirm, chatId }: ConfirmExitFieldProps) {
+export function ConfirmExitField({ setIsExitConfirm, chatId, setOpenChatInfo }: ConfirmExitFieldProps) {
 
     async function NotConfirmHandle() {
         setIsExitConfirm(false);
@@ -18,10 +19,8 @@ export function ConfirmExitField({ setIsExitConfirm, chatId }: ConfirmExitFieldP
 
         DeleteUserFromChat(chatId);
         setIsExitConfirm(false);
+        setOpenChatInfo({ isOpen: false, id: -1 });
     }
-    useEffect(() => {
-        console.log("sdfsdfsdf",chatId);
-    }, [])
     return (
         <div className="ExitBackground">
             <div className="ExitConfirmContainer">

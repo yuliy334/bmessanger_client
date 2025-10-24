@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import {useState } from "react";
 import type { AuthUser } from "../../types/user";
 import { logInCheck } from "./LogInLogic";
 import "./LogInStyle.css"
@@ -49,7 +49,7 @@ function LogIn({startSession}:LogInUpContainerProps) {
 
 
 
-            <button type="submit">Log In</button>
+            <button type="submit" className="LogInBtn">Log In</button>
         </form>
     )
 }

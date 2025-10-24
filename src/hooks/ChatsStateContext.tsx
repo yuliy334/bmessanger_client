@@ -1,6 +1,5 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer} from "react";
 import type { chat, Info, message } from "../types/chatsInfoTypes";
-import { Chats } from "../components/ChatsMenu/ChatsMenu";
 import type { AddedUserAnswer } from "../types/WebSocketTypes";
 
 
@@ -56,26 +55,22 @@ function chatsReducer(state: Info, action: Action): Info {
                 chats: state.chats.filter(chat => chat?.id !== action.payload)
             };
             console.log(NewDeletedState);
-            return NewDeletedState;
+            return {...NewDeletedState};
         case "delete_user":
-            const userExists = state.chats.at(action.payload.chatId)?.users.some((user) => user.username == action.payload.username);
-            if (!userExists) {
-                return state;
-            }
-            
-            const NewChatWithoutUser = state.chats.at(action.payload.chatId) 
-            if(!NewChatWithoutUser){
-                return state;
-            }
-            NewChatWithoutUser.users = NewChatWithoutUser.users.filter((user) => user.username != action.payload.username);
-            const NewDeletedUserState = {
+            const NewChatWithoutUser = {
                 ...state,
-                chats: state.chats.map((chat) =>
-                    chat.id === action.payload.chatId ? NewChatWithoutUser : chat
-                )
+                chats: state.chats.map(chat => {
+                    if (chat.id === action.payload.chatId) {
+                        return {
+                            ...chat,
+                            users: chat.users.filter(user => user.username !== action.payload.username)
+                        };
+                    }
+                    return chat;
+                })
             };
-
-            return NewDeletedUserState;
+            console.log(NewChatWithoutUser);
+            return NewChatWithoutUser;
 
         default:
             return state;

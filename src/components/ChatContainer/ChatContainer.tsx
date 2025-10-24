@@ -6,9 +6,8 @@ import "./ChatContainerStyle.css"
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import type { user } from "../../types/chatsInfoTypes";
-import { UserAddedToGroup } from "../UserAdedToGroup/UserAdedToGroup";
 import { AddUserToChat } from "../AddUserToChat/AddUserToChat";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ConfirmExitField } from "../ConfirmExitField/ConfirmExitField";
 
 interface MessagesProps {
@@ -16,10 +15,11 @@ interface MessagesProps {
     IsNewPersonalChat: boolean;
     IsNewGroupChat: boolean;
     OpenChatInfo: openChatInfo;
+    setOpenChatInfo: React.Dispatch<openChatInfo>;
     chatUsers: user[];
 }
 
-export function ChatContainer({ chatName, IsNewPersonalChat, OpenChatInfo, IsNewGroupChat, chatUsers }: MessagesProps) {
+export function ChatContainer({ chatName, IsNewPersonalChat, OpenChatInfo, IsNewGroupChat, chatUsers, setOpenChatInfo }: MessagesProps) {
     const title = IsNewPersonalChat ? "create new personal chat" : IsNewGroupChat ? "create new group chat" : chatName;
     const [IsAddUserOpen, setIsAddUserOpen] = useState<boolean>(false);
     const [IsExitConfirm, setIsExitConfirm] = useState<boolean>(false);
@@ -27,7 +27,7 @@ export function ChatContainer({ chatName, IsNewPersonalChat, OpenChatInfo, IsNew
     return (
         <div className="messagesContainer">
             {IsAddUserOpen && <AddUserToChat chatUsers={chatUsers} chatId={OpenChatInfo.id} setIsAddUserOpen={setIsAddUserOpen} />}
-            {IsExitConfirm && <ConfirmExitField setIsExitConfirm={setIsExitConfirm} chatId={OpenChatInfo.id} />}
+            {IsExitConfirm && <ConfirmExitField setIsExitConfirm={setIsExitConfirm} chatId={OpenChatInfo.id} setOpenChatInfo={setOpenChatInfo}/>}
             <div className="ChatInfo">
                 <div className="ChatInfoHead">
                     <span className="ChatName"> {title}</span>

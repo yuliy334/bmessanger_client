@@ -50,9 +50,10 @@ export function ChatDeleted(dispatch: React.Dispatch<Action>){
 export function UserDeleted(dispatch: React.Dispatch<Action>){
     const socket = getSocket();
     if(socket){
-        socket.on("DeleteChat", (message:AddedUserAnswer) =>{
-            dispatch({type:"delete_user", payload:message});
+        socket.on("DeleteUserFromChat", (message:AddedUserAnswer) =>{
             console.log(message);
+            dispatch({type:"delete_user", payload:message});
+            
         })
     }
 }
